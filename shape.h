@@ -31,6 +31,8 @@ public:
     void addSlope(qreal a, Places place);
     void addPit(qreal a, Places place);
 
+    void setPosition(qreal x, qreal y);
+
     qreal getX();
     qreal getY();
 

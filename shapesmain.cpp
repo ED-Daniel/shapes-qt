@@ -27,12 +27,6 @@ void ShapesMain::editFigure(bool)
     this->update();
 }
 
-void ShapesMain::repaint()
-{
-
-    this->update();
-}
-
 void ShapesMain::paintEvent(QPaintEvent *) {
     QPainter painter(this);
     SceneController::getInstance().renderFigures(painter);
@@ -50,6 +44,7 @@ void ShapesMain::mousePressEvent(QMouseEvent *e)
 
             if (e->button() == Qt::LeftButton) {
                 SceneController::getInstance().selectFigure(&shape);
+                setMouseTracking(true);
             }
             else if (e->button() == Qt::RightButton) {
                 SceneController::getInstance().selectFigure(&shape);
@@ -73,8 +68,25 @@ void ShapesMain::mousePressEvent(QMouseEvent *e)
     }
 
     if (!found) {
-        SceneController::getInstance().createFirstShape(e->pos().x(), e->pos().y());
+        if (e->button() == Qt::LeftButton) {
+            SceneController::getInstance().deselectFigure();
+        }
+        else if (e->button() == Qt::RightButton) {
+            SceneController::getInstance().createFirstShape(e->pos().x(), e->pos().y());
+        }
     }
 
     this->update();
+}
+
+void ShapesMain::mouseMoveEvent(QMouseEvent *e)
+{
+    ui->statusbar->showMessage("You are moving mouse " + QString::number(e->pos().x()) + " " + QString::number(e->pos().y()));
+    SceneController::getInstance().moveSelectedToCoordinates(e->pos().x(), e->pos().y());
+    this->update();
+}
+
+void ShapesMain::mouseReleaseEvent(QMouseEvent *)
+{
+    setMouseTracking(false);
 }

@@ -25,11 +25,12 @@ private:
 private slots:
     void deleteFigure(bool);
     void editFigure(bool);
-    void repaint();
 
 protected:
     void paintEvent(QPaintEvent *);
     void mousePressEvent(QMouseEvent *e);
+    void mouseMoveEvent(QMouseEvent *e);
+    void mouseReleaseEvent(QMouseEvent *e);
 };
 
 #endif // SHAPESMAIN_H

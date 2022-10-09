@@ -175,6 +175,12 @@ void Shape::addPit(qreal a, Places place)
     }
 }
 
+void Shape::setPosition(qreal x, qreal y)
+{
+    this->x = x;
+    this->y = y;
+}
+
 qreal Shape::getX()
 {
     return x;

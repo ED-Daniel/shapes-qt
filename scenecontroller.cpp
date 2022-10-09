@@ -89,7 +89,12 @@ void SceneController::renderFigures(QPainter & painter)
     }
 }
 
-void SceneController::dragSelectedFigure()
+void SceneController::moveSelectedToCoordinates(qreal x, qreal y)
 {
+    if (selected == nullptr) {
+        return;
+    }
 
+    selected->outline.translate(x - selected->getX(), y - selected->getY());
+    selected->setPosition(x, y);
 }

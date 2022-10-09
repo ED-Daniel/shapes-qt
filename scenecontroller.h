@@ -44,6 +44,8 @@ public:
     void editSelectedFigure();
 
     void renderFigures(QPainter & painter);
+
+    void moveSelectedToCoordinates(qreal x, qreal y);
 };
 
 #endif // SCENECONTROLLER_H
