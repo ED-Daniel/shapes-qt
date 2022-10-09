@@ -175,4 +175,14 @@ void Shape::addPit(qreal a, Places place)
     }
 }
 
+qreal Shape::getX()
+{
+    return x;
+}
+
+qreal Shape::getY()
+{
+    return y;
+}
+
 
