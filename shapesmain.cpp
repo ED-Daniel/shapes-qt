@@ -40,10 +40,10 @@ void ShapesMain::paintEvent(QPaintEvent *)
     Shape shape = Shape(startX, startY, rectWidth, rectHeight);
     shape.setStart(a);
 
-    shape.addRoundPit(radius, Places::upper);
+    shape.addPit(radius, Places::upper);
     shape.addSlope(a, Places::upperRight);
     shape.addSlope(a, Places::downRight);
-    shape.addRoundPit(radius, Places::down);
+    shape.addPit(radius, Places::down);
     shape.addSlope(a, Places::downLeft);
     shape.addSlope(a, Places::upperLeft);
 

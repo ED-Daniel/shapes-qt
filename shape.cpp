@@ -155,4 +155,24 @@ void Shape::addSlope(qreal a, Places place)
     }
 }
 
+void Shape::addPit(qreal a, Places place)
+{
+    switch (place) {
+    case Places::upper:
+        addLine(Places::upperLeft, a);
+        outline.lineTo(x + width / 2 - a, y + a);
+        outline.lineTo(x + width / 2 + a, y + a);
+        outline.lineTo(x + width / 2 + a, y);
+        break;
+    case Places::down:
+        addLine(Places::downRight, a);
+        outline.lineTo(x + width / 2 + a, y + height - a);
+        outline.lineTo(x + width / 2 - a, y + height - a);
+        outline.lineTo(x + width / 2 - a, y + height);
+        break;
+    default:
+        break;
+    }
+}
+
 
