@@ -1,6 +1,6 @@
 #include "shapesmain.h"
 #include "ui_shapesmain.h"
-#include "shape.h"
+#include "scenecontroller.h"
 
 ShapesMain::ShapesMain(QWidget *parent)
     : QMainWindow(parent)
@@ -16,40 +16,37 @@ ShapesMain::~ShapesMain()
 
 void ShapesMain::paintEvent(QPaintEvent *)
 {
-    qreal rectWidth = 200;
-    qreal rectHeight = 100;
+    SceneController::getInstance().createFirstShape();
 
-    qreal radius = 15;
+    qreal rectWidth = SceneController::getInstance().rectWidth;
+    qreal rectHeight = SceneController::getInstance().rectHeight;
 
-    qreal a = 20;
+    qreal startX = SceneController::getInstance().startX;
+    qreal startY = SceneController::getInstance().startY;
 
-    qreal startX = 100;
-    qreal startY = 100;
-
-    qreal angle = 0;
-
-//    QPainterPath outline;
-//    outline.moveTo(startX, startY);
-
-//    outline.lineTo(startX + rectWidth, startY);
-//    outline.lineTo(startX + rectWidth, startY + rectHeight - radius);
-//    outline.arcTo(startX + rectWidth - radius, startY + rectHeight - radius, radius, radius, 0, -90);
-//    outline.lineTo(startX, startY + rectHeight);
-//    outline.lineTo(startX, startY);
-
-    Shape shape = Shape(startX, startY, rectWidth, rectHeight);
-    shape.setStart(a);
-
-    shape.addPit(radius, Places::upper);
-    shape.addSlope(a, Places::upperRight);
-    shape.addSlope(a, Places::downRight);
-    shape.addPit(radius, Places::down);
-    shape.addSlope(a, Places::downLeft);
-    shape.addSlope(a, Places::upperLeft);
+    qreal angle = 10 / 3;
 
     QPainter painter(this);
-    painter.translate(startX + rectWidth / 2, startY + rectHeight / 2);
-    painter.rotate(angle);
-    painter.translate(-(startX + rectWidth / 2), -(startY + rectHeight / 2));
-    painter.strokePath(shape.outline, QPen(Qt::black, 1));
+    QTransform transform;
+
+    transform.translate(startX + rectWidth / 2, startY + rectHeight / 2);
+    transform.rotate(angle);
+    transform.translate(-(startX + rectWidth / 2), -(startY + rectHeight / 2));
+
+    SceneController::getInstance().shapes[0].outline = transform.map(SceneController::getInstance().shapes[0].outline);
+
+    painter.strokePath(SceneController::getInstance().shapes[0].outline, QPen(Qt::black, 1));
+}
+
+void ShapesMain::mousePressEvent(QMouseEvent *e)
+{
+    QPainterPath mouseRect;
+    mouseRect.addRect(e->pos().x(), e->pos().y(), 1, 1);
+
+    if (SceneController::getInstance().shapes[0].outline.intersects(mouseRect)) {
+        ui->statusbar->showMessage("Inside");
+    }
+    else {
+        ui->statusbar->showMessage("Outside");
+    }
 }

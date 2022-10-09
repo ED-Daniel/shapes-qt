@@ -22,6 +22,7 @@ private:
 
 protected:
     void paintEvent(QPaintEvent *);
+    void mousePressEvent(QMouseEvent *e);
 };
 
 #endif // SHAPESMAIN_H

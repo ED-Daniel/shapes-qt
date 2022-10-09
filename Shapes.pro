@@ -10,10 +10,12 @@ CONFIG += c++17
 
 SOURCES += \
     main.cpp \
+    scenecontroller.cpp \
     shape.cpp \
     shapesmain.cpp
 
 HEADERS += \
+    scenecontroller.h \
     shape.h \
     shapesmain.h
 
