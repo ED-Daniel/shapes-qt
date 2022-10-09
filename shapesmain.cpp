@@ -41,11 +41,11 @@ void ShapesMain::paintEvent(QPaintEvent *)
     shape.setStart(a);
 
     shape.addLine(Places::upperLeft);
-    shape.addStair(a, Places::upperRight);
-    shape.addStair(a, Places::downRight);
+    shape.addSlope(a, Places::upperRight);
+    shape.addSlope(a, Places::downRight);
     shape.addLine(Places::downRight);
-    shape.addStair(a, Places::downLeft);
-    shape.addStair(a, Places::upperLeft);
+    shape.addSlope(a, Places::downLeft);
+    shape.addSlope(a, Places::upperLeft);
 
     QPainter painter(this);
     painter.translate(startX + rectWidth / 2, startY + rectHeight / 2);
