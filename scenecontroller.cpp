@@ -50,9 +50,37 @@ void SceneController::selectFigure(Shape *figure)
     selected = figure;
 }
 
+void SceneController::deselectFigure()
+{
+    selected = nullptr;
+}
+
+void SceneController::deleteFigure(Shape *figure)
+{
+    for (size_t i = 0; i < shapes.size(); i++) {
+        if (figure == &shapes[i]) {
+            if (figure == selected) {
+                selected = nullptr;
+            }
+            shapes.erase(shapes.begin() + i);
+        }
+    }
+}
+
+void SceneController::deleteSelectedFigure()
+{
+    deleteFigure(selected);
+    deselectFigure();
+}
+
+void SceneController::editSelectedFigure()
+{
+
+}
+
 void SceneController::renderFigures(QPainter & painter)
 {
-    for (const Shape & shape : shapes) {
+    for (Shape & shape : shapes) {
         if (&shape == selected) {
             painter.strokePath(shape.outline, QPen(Qt::blue, 3));
             continue;

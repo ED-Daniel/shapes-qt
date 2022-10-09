@@ -20,6 +20,10 @@ public:
 private:
     Ui::ShapesMain *ui;
 
+private slots:
+    void deleteFigure(bool);
+    void editFigure(bool);
+
 protected:
     void paintEvent(QPaintEvent *);
     void mousePressEvent(QMouseEvent *e);

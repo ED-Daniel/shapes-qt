@@ -14,11 +14,18 @@ ShapesMain::~ShapesMain()
     delete ui;
 }
 
-void ShapesMain::paintEvent(QPaintEvent *) {
-    if (SceneController::getInstance().shapes.empty()) {
-        return;
-    }
+void ShapesMain::deleteFigure(bool)
+{
+    SceneController::getInstance().deleteSelectedFigure();
+    this->update();
+}
 
+void ShapesMain::editFigure(bool)
+{
+
+}
+
+void ShapesMain::paintEvent(QPaintEvent *) {
     QPainter painter(this);
     SceneController::getInstance().renderFigures(painter);
 }
@@ -28,19 +35,37 @@ void ShapesMain::mousePressEvent(QMouseEvent *e)
     QPainterPath mouseRect;
     mouseRect.addRect(e->pos().x(), e->pos().y(), 1, 1);
 
-    if (SceneController::getInstance().shapes.empty()) {
-        SceneController::getInstance().createFirstShape(e->pos().x(), e->pos().y());
-    }
+    bool found = false;
 
     for (auto & shape : SceneController::getInstance().shapes) {
         if (shape.outline.intersects(mouseRect)) {
-            ui->statusbar->showMessage("Inside");
-            SceneController::getInstance().rotateFigure(0, 20);
-            SceneController::getInstance().selectFigure(&shape);
+
+            if (e->button() == Qt::LeftButton) {
+                SceneController::getInstance().selectFigure(&shape);
+            }
+            else if (e->button() == Qt::RightButton) {
+                SceneController::getInstance().selectFigure(&shape);
+
+                QMenu * contextMenu = new QMenu();
+                QAction * deleteAction = new QAction("Delete", this);
+                QAction * editAction = new QAction("Edit", this);
+
+                connect(deleteAction, SIGNAL(triggered(bool)), this, SLOT(deleteFigure(bool)));
+                connect(deleteAction, SIGNAL(triggered(bool)), this, SLOT(editFigure(bool)));
+
+                contextMenu->addAction(deleteAction);
+                contextMenu->addAction(editAction);
+
+                contextMenu->popup(this->mapToGlobal(e->pos()));
+            }
+
+            found = true;
+            break;
         }
-        else {
-            ui->statusbar->showMessage("Outside");
-        }
+    }
+
+    if (!found) {
+        SceneController::getInstance().createFirstShape(e->pos().x(), e->pos().y());
     }
 
     this->update();
