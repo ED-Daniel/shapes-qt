@@ -18,7 +18,10 @@ void ShapesMain::paintEvent(QPaintEvent *)
 {
     qreal rectWidth = 200;
     qreal rectHeight = 100;
-    qreal radius = 40;
+
+//    qreal radius = 40;
+
+    qreal a = 20;
 
     qreal startX = 100;
     qreal startY = 100;
@@ -35,14 +38,14 @@ void ShapesMain::paintEvent(QPaintEvent *)
 //    outline.lineTo(startX, startY);
 
     Shape shape = Shape(startX, startY, rectWidth, rectHeight);
-    shape.setStart(radius);
+    shape.setStart(a);
 
     shape.addLine(Places::upperLeft);
-    shape.addInnerRound(radius, Places::upperRight);
-    shape.addInnerRound(radius, Places::downRight);
+    shape.addStair(a, Places::upperRight);
+    shape.addStair(a, Places::downRight);
     shape.addLine(Places::downRight);
-    shape.addInnerRound(radius, Places::downLeft);
-    shape.addInnerRound(radius, Places::upperLeft);
+    shape.addStair(a, Places::downLeft);
+    shape.addStair(a, Places::upperLeft);
 
     QPainter painter(this);
     painter.translate(startX + rectWidth / 2, startY + rectHeight / 2);

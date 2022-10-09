@@ -87,4 +87,32 @@ void Shape::addInnerRound(qreal radius, Places place)
     }
 }
 
+void Shape::addStair(qreal a, Places place)
+{
+    switch (place) {
+    case Places::upperLeft:
+        addLine(Places::downLeft, a);
+        outline.lineTo(x + a, y + a);
+        outline.lineTo(x + a, y);
+        break;
+    case Places::upperRight:
+        addLine(Places::upper, a);
+        outline.lineTo(x + width - a, y + a);
+        outline.lineTo(x + width, y + a);
+        break;
+    case Places::downLeft:
+        addLine(Places::down, a);
+        outline.lineTo(x + a, y + height - a);
+        outline.lineTo(x, y + height - a);
+        break;
+    case Places::downRight:
+        addLine(Places::upperRight, a);
+        outline.lineTo(x + width - a, y + height - a);
+        outline.lineTo(x + width - a, y + height);
+        break;
+    default:
+        break;
+    }
+}
+
 

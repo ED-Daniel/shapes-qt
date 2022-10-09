@@ -27,9 +27,9 @@ public:
     void addOuterRound(qreal radius, Places place);
     void addInnerRound(qreal radius, Places place);
     void addRoundPit(qreal radius, Places place);
-    void addStair(qreal x, Places place);
-    void addSlope(qreal x, Places place);
-    void addPit(qreal x, Places place);
+    void addStair(qreal a, Places place);
+    void addSlope(qreal a, Places place);
+    void addPit(qreal a, Places place);
 
 private:
     qreal x;
