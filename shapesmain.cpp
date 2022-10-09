@@ -35,17 +35,14 @@ void ShapesMain::paintEvent(QPaintEvent *)
 //    outline.lineTo(startX, startY);
 
     Shape shape = Shape(startX, startY, rectWidth, rectHeight);
-    shape.setStart(0);
+    shape.setStart(radius);
 
     shape.addLine(Places::upperLeft);
-    shape.addLine(Places::upper);
-    shape.addLine(Places::upperRight, radius);
-
-    shape.addOuterRound(radius, Places::downRight);
-
+    shape.addInnerRound(radius, Places::upperRight);
+    shape.addInnerRound(radius, Places::downRight);
     shape.addLine(Places::downRight);
-    shape.addLine(Places::down);
-    shape.addLine(Places::downLeft);
+    shape.addInnerRound(radius, Places::downLeft);
+    shape.addInnerRound(radius, Places::upperLeft);
 
     QPainter painter(this);
     painter.translate(startX + rectWidth / 2, startY + rectHeight / 2);

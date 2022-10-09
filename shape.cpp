@@ -26,13 +26,13 @@ void Shape::addLine(Places place, qreal endOffset)
         outline.lineTo(x + width, y + height - endOffset);
         break;
     case Places::downRight:
-        outline.lineTo(x + width / 2 - endOffset, y + height);
+        outline.lineTo(x + width / 2 + endOffset, y + height);
         break;
     case Places::down:
-        outline.lineTo(x - endOffset, y + height);
+        outline.lineTo(x + endOffset, y + height);
         break;
     case Places::downLeft:
-        outline.lineTo(x, y - endOffset);
+        outline.lineTo(x, y + endOffset);
         break;
     default:
         break;
@@ -43,16 +43,44 @@ void Shape::addOuterRound(qreal radius, Places place)
 {
     switch (place) {
     case Places::upperLeft:
-        outline.arcTo(radius, radius, radius, radius, 180, -90);
+        addLine(Places::downLeft, radius);
+        outline.arcTo(x, y, radius * 2, radius * 2, 180, -90);
         break;
     case Places::upperRight:
-        outline.arcTo(x + width - radius, y + radius, radius, radius, 90, -90);
+        addLine(Places::upper, radius);
+        outline.arcTo(x + width - radius * 2, y, radius * 2, radius * 2, 90, -90);
         break;
     case Places::downLeft:
-        outline.arcTo(x + radius, y + height - radius, radius, radius, -90, -90);
+        addLine(Places::down, radius);
+        outline.arcTo(x, y + height - radius * 2, radius * 2, radius * 2, -90, -90);
         break;
     case Places::downRight:
-        outline.arcTo(x + width - radius, y + height - radius, radius, radius, 0, -90);
+        addLine(Places::upperRight, radius);
+        outline.arcTo(x + width - radius * 2, y + height - radius * 2, radius * 2, radius * 2, 0, -90);
+        break;
+    default:
+        break;
+    }
+}
+
+void Shape::addInnerRound(qreal radius, Places place)
+{
+    switch (place) {
+    case Places::upperLeft:
+        addLine(Places::downLeft, radius);
+        outline.arcTo(x - radius, y - radius, radius * 2, radius * 2, 270, 90);
+        break;
+    case Places::upperRight:
+        addLine(Places::upper, radius);
+        outline.arcTo(x + width - radius, y - radius, radius * 2, radius * 2, 180, 90);
+        break;
+    case Places::downLeft:
+        addLine(Places::down, radius);
+        outline.arcTo(x - radius, y + height - radius, radius * 2, radius * 2, 0, 90);
+        break;
+    case Places::downRight:
+        addLine(Places::upperRight, radius);
+        outline.arcTo(x + width - radius, y + height - radius, radius * 2, radius * 2, 90, 90);
         break;
     default:
         break;
