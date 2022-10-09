@@ -22,7 +22,15 @@ void ShapesMain::deleteFigure(bool)
 
 void ShapesMain::editFigure(bool)
 {
+    EditShapeDialog * editShapeDialog = new EditShapeDialog(this);
+    editShapeDialog->show();
+    this->update();
+}
 
+void ShapesMain::repaint()
+{
+
+    this->update();
 }
 
 void ShapesMain::paintEvent(QPaintEvent *) {
@@ -51,7 +59,7 @@ void ShapesMain::mousePressEvent(QMouseEvent *e)
                 QAction * editAction = new QAction("Edit", this);
 
                 connect(deleteAction, SIGNAL(triggered(bool)), this, SLOT(deleteFigure(bool)));
-                connect(deleteAction, SIGNAL(triggered(bool)), this, SLOT(editFigure(bool)));
+                connect(editAction, SIGNAL(triggered(bool)), this, SLOT(editFigure(bool)));
 
                 contextMenu->addAction(deleteAction);
                 contextMenu->addAction(editAction);

@@ -5,6 +5,8 @@
 #include <QtGui>
 #include <QtCore>
 
+#include "editshapedialog.h"
+
 QT_BEGIN_NAMESPACE
 namespace Ui { class ShapesMain; }
 QT_END_NAMESPACE
@@ -23,6 +25,7 @@ private:
 private slots:
     void deleteFigure(bool);
     void editFigure(bool);
+    void repaint();
 
 protected:
     void paintEvent(QPaintEvent *);

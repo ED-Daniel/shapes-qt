@@ -88,3 +88,8 @@ void SceneController::renderFigures(QPainter & painter)
         painter.strokePath(shape.outline, QPen(Qt::black, 1));
     }
 }
+
+void SceneController::dragSelectedFigure()
+{
+
+}

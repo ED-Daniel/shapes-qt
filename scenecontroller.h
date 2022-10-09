@@ -28,6 +28,8 @@ public:
 
     std::vector<Shape> shapes = std::vector<Shape>();
 
+    bool drag = false;
+
     void createFirstShape(qreal x, qreal y);
     void rotateFigure(size_t i, qreal angle);
 
