@@ -81,12 +81,24 @@ void ShapesMain::mousePressEvent(QMouseEvent *e)
 
 void ShapesMain::mouseMoveEvent(QMouseEvent *e)
 {
-    ui->statusbar->showMessage("You are moving mouse " + QString::number(e->pos().x()) + " " + QString::number(e->pos().y()));
-    SceneController::getInstance().moveSelectedToCoordinates(e->pos().x(), e->pos().y());
+    if (!canMoveObjects) {
+        return;
+    }
+
+    try {
+        SceneController::getInstance().moveSelectedToCoordinates(e->pos().x(), e->pos().y(), this->size().width(), this->size().height());
+    }
+    catch (std::out_of_range & e) {
+        ui->statusbar->showMessage("Out of bounds");
+        setMouseTracking(false);
+        canMoveObjects = false;
+    }
+
     this->update();
 }
 
 void ShapesMain::mouseReleaseEvent(QMouseEvent *)
 {
     setMouseTracking(false);
+    canMoveObjects = true;
 }

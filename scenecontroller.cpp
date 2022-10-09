@@ -89,12 +89,21 @@ void SceneController::renderFigures(QPainter & painter)
     }
 }
 
-void SceneController::moveSelectedToCoordinates(qreal x, qreal y)
+void SceneController::moveSelectedToCoordinates(qreal x, qreal y, qreal windowWidth, qreal windowHeight)
 {
     if (selected == nullptr) {
         return;
     }
 
-    selected->outline.translate(x - selected->getX(), y - selected->getY());
-    selected->setPosition(x, y);
+    QPainterPath window;
+    window.addRect(0, 0, windowWidth, windowHeight);
+
+    if (window.contains(selected->outline)) {
+        selected->outline.translate(x - selected->getX(), y - selected->getY());
+        selected->setPosition(x, y);
+    }
+    else {
+        selected->restorePosition();
+        throw std::out_of_range("FIGURE WAS OUT OF RANGE");
+    }
 }

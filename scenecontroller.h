@@ -3,6 +3,7 @@
 
 #include "shape.h"
 #include <iostream>
+#include <stdexcept>
 
 class SceneController
 {
@@ -28,8 +29,6 @@ public:
 
     std::vector<Shape> shapes = std::vector<Shape>();
 
-    bool drag = false;
-
     void createFirstShape(qreal x, qreal y);
     void rotateFigure(size_t i, qreal angle);
 
@@ -45,7 +44,7 @@ public:
 
     void renderFigures(QPainter & painter);
 
-    void moveSelectedToCoordinates(qreal x, qreal y);
+    void moveSelectedToCoordinates(qreal x, qreal y, qreal windowWidth, qreal windowHeight);
 };
 
 #endif // SCENECONTROLLER_H

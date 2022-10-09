@@ -177,8 +177,18 @@ void Shape::addPit(qreal a, Places place)
 
 void Shape::setPosition(qreal x, qreal y)
 {
+    previousX = this->x;
+    previousY = this->y;
+
     this->x = x;
     this->y = y;
+}
+
+void Shape::restorePosition()
+{
+    outline.translate(previousX - this->x, previousY - this->y);
+    this->x = previousX;
+    this->y = previousY;
 }
 
 qreal Shape::getX()

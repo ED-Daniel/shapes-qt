@@ -4,6 +4,7 @@
 #include <QMainWindow>
 #include <QtGui>
 #include <QtCore>
+#include <stdexcept>
 
 #include "editshapedialog.h"
 
@@ -21,6 +22,8 @@ public:
 
 private:
     Ui::ShapesMain *ui;
+
+    bool canMoveObjects = true;
 
 private slots:
     void deleteFigure(bool);

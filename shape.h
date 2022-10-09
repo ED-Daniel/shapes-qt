@@ -32,6 +32,7 @@ public:
     void addPit(qreal a, Places place);
 
     void setPosition(qreal x, qreal y);
+    void restorePosition();
 
     qreal getX();
     qreal getY();
@@ -42,6 +43,9 @@ private:
 
     qreal width;
     qreal height;
+
+    qreal previousX;
+    qreal previousY;
 };
 
 #endif // SHAPE_H
