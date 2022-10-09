@@ -19,7 +19,7 @@ void ShapesMain::paintEvent(QPaintEvent *)
     qreal rectWidth = 200;
     qreal rectHeight = 100;
 
-//    qreal radius = 40;
+    qreal radius = 15;
 
     qreal a = 20;
 
@@ -40,10 +40,10 @@ void ShapesMain::paintEvent(QPaintEvent *)
     Shape shape = Shape(startX, startY, rectWidth, rectHeight);
     shape.setStart(a);
 
-    shape.addLine(Places::upperLeft);
+    shape.addRoundPit(radius, Places::upper);
     shape.addSlope(a, Places::upperRight);
     shape.addSlope(a, Places::downRight);
-    shape.addLine(Places::downRight);
+    shape.addRoundPit(radius, Places::down);
     shape.addSlope(a, Places::downLeft);
     shape.addSlope(a, Places::upperLeft);
 

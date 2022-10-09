@@ -87,6 +87,22 @@ void Shape::addInnerRound(qreal radius, Places place)
     }
 }
 
+void Shape::addRoundPit(qreal radius, Places place)
+{
+    switch (place) {
+    case Places::upper:
+        addLine(Places::upperLeft, radius);
+        outline.arcTo(x + width / 2 - radius, y - radius, radius * 2, radius * 2, 180, 180);
+        break;
+    case Places::down:
+        addLine(Places::downRight, radius);
+        outline.arcTo(x + width / 2 - radius, y + height - radius, radius * 2, radius * 2, 0, 180);
+        break;
+    default:
+        break;
+    }
+}
+
 void Shape::addStair(qreal a, Places place)
 {
     switch (place) {
