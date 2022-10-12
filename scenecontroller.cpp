@@ -5,17 +5,37 @@ SceneController::SceneController()
 
 }
 
-void SceneController::createFirstShape(qreal x, qreal y)
+void SceneController::createFirstShape(qreal x, qreal y, ShapesTypes shapeType)
 {
-    Shape shape = Shape(x, y, width, height);
-    shape.setStart(verticesExcavations);
 
-    shape.addRoundPit(pitRadius, Places::upper);
-    shape.addStair(verticesExcavations, Places::upperRight);
-    shape.addStair(verticesExcavations, Places::downRight);
-    shape.addLine(Places::downRight);
-    shape.addOuterRound(verticesRadius, Places::downLeft);
-    shape.addStair(verticesExcavations, Places::upperLeft);
+    Shape shape = Shape(x, y, width, height);
+
+    switch (shapeType) {
+    case ShapesTypes::first:
+        shape.setStart(verticesExcavations);
+
+        shape.addRoundPit(pitRadius, Places::upper);
+        shape.addStair(verticesExcavations, Places::upperRight);
+        shape.addStair(verticesExcavations, Places::downRight);
+        shape.addLine(Places::downRight);
+        shape.addOuterRound(verticesRadius, Places::downLeft);
+        shape.addStair(verticesExcavations, Places::upperLeft);
+        break;
+    case ShapesTypes::second:
+        shape.setStart(verticesRadius);
+
+        shape.addLine(Places::upperLeft);
+        shape.addInnerRound(verticesRadius, Places::upperRight);
+        shape.addInnerRound(verticesRadius, Places::downRight);
+        shape.addPit(pitDeepth, Places::down);
+        shape.addOuterRound(verticesRadius, Places::downLeft);
+        shape.addInnerRound(verticesRadius, Places::upperLeft);
+        break;
+    case ShapesTypes::nothing:
+        return;
+    default:
+        return;
+    }
 
     shapes.push_back(shape);
 }
@@ -106,4 +126,9 @@ void SceneController::moveSelectedToCoordinates(qreal x, qreal y, qreal windowWi
         selected->restorePosition();
         throw std::out_of_range("FIGURE WAS OUT OF RANGE");
     }
+}
+
+bool SceneController::hasSelectedFigure()
+{
+    return selected != nullptr;
 }

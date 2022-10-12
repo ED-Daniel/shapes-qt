@@ -29,11 +29,20 @@ private slots:
     void deleteFigure(bool);
     void editFigure(bool);
 
+    void on_deleteSelectedButton_clicked();
+
+    void on_firstShapeButton_toggled(bool checked);
+
+    void on_secondShapeButton_toggled(bool checked);
+
 protected:
     void paintEvent(QPaintEvent *);
     void mousePressEvent(QMouseEvent *e);
     void mouseMoveEvent(QMouseEvent *e);
     void mouseReleaseEvent(QMouseEvent *e);
+
+public:
+    ShapesTypes selectedType = ShapesTypes::nothing;
 };
 
 #endif // SHAPESMAIN_H

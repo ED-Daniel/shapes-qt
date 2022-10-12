@@ -7,6 +7,7 @@ ShapesMain::ShapesMain(QWidget *parent)
     , ui(new Ui::ShapesMain)
 {
     ui->setupUi(this);
+    ui->deleteSelectedButton->setEnabled(false);
 }
 
 ShapesMain::~ShapesMain()
@@ -30,6 +31,13 @@ void ShapesMain::editFigure(bool)
 void ShapesMain::paintEvent(QPaintEvent *) {
     QPainter painter(this);
     SceneController::getInstance().renderFigures(painter);
+
+    if (SceneController::getInstance().hasSelectedFigure()) {
+        ui->deleteSelectedButton->setEnabled(true);
+    }
+    else {
+        ui->deleteSelectedButton->setEnabled(false);
+    }
 }
 
 void ShapesMain::mousePressEvent(QMouseEvent *e)
@@ -44,10 +52,12 @@ void ShapesMain::mousePressEvent(QMouseEvent *e)
 
             if (e->button() == Qt::LeftButton) {
                 SceneController::getInstance().selectFigure(&shape);
+                ui->deleteSelectedButton->setEnabled(true);
                 setMouseTracking(true);
             }
             else if (e->button() == Qt::RightButton) {
                 SceneController::getInstance().selectFigure(&shape);
+                ui->deleteSelectedButton->setEnabled(true);
 
                 QMenu * contextMenu = new QMenu();
                 QAction * deleteAction = new QAction("Delete", this);
@@ -72,7 +82,7 @@ void ShapesMain::mousePressEvent(QMouseEvent *e)
             SceneController::getInstance().deselectFigure();
         }
         else if (e->button() == Qt::RightButton) {
-            SceneController::getInstance().createFirstShape(e->pos().x(), e->pos().y());
+            SceneController::getInstance().createFirstShape(e->pos().x(), e->pos().y(), selectedType);
         }
     }
 
@@ -102,3 +112,34 @@ void ShapesMain::mouseReleaseEvent(QMouseEvent *)
     setMouseTracking(false);
     canMoveObjects = true;
 }
+
+void ShapesMain::on_deleteSelectedButton_clicked()
+{
+    SceneController::getInstance().deleteSelectedFigure();
+    this->update();
+}
+
+
+void ShapesMain::on_firstShapeButton_toggled(bool checked)
+{
+    if (checked) {
+        ui->secondShapeButton->setChecked(false);
+        selectedType = ShapesTypes::first;
+    }
+    else {
+        selectedType = ShapesTypes::nothing;
+    }
+}
+
+
+void ShapesMain::on_secondShapeButton_toggled(bool checked)
+{
+    if (checked) {
+        ui->firstShapeButton->setChecked(false);
+        selectedType = ShapesTypes::second;
+    }
+    else {
+        selectedType = ShapesTypes::nothing;
+    }
+}
+

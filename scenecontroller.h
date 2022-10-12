@@ -4,6 +4,13 @@
 #include "shape.h"
 #include <iostream>
 #include <stdexcept>
+#include <QtWidgets>
+
+enum ShapesTypes {
+    first,
+    second,
+    nothing
+};
 
 class SceneController
 {
@@ -29,7 +36,7 @@ public:
 
     std::vector<Shape> shapes = std::vector<Shape>();
 
-    void createFirstShape(qreal x, qreal y);
+    void createFirstShape(qreal x, qreal y, ShapesTypes shapeType);
     void rotateFigure(size_t i, qreal angle);
 
     void selectFigure(size_t i);
@@ -45,6 +52,8 @@ public:
     void renderFigures(QPainter & painter);
 
     void moveSelectedToCoordinates(qreal x, qreal y, qreal windowWidth, qreal windowHeight);
+
+    bool hasSelectedFigure();
 };
 
 #endif // SCENECONTROLLER_H
