@@ -64,10 +64,28 @@
      <height>22</height>
     </rect>
    </property>
+   <widget class="QMenu" name="menuDelete">
+    <property name="title">
+     <string>Delete</string>
+    </property>
+    <addaction name="actionDelete_All"/>
+    <addaction name="actionDelete_Intersecting"/>
+   </widget>
+   <addaction name="menuDelete"/>
   </widget>
   <action name="actionDraw">
    <property name="text">
     <string>Draw</string>
+   </property>
+  </action>
+  <action name="actionDelete_All">
+   <property name="text">
+    <string>Delete All</string>
+   </property>
+  </action>
+  <action name="actionDelete_Intersecting">
+   <property name="text">
+    <string>Delete Intersecting</string>
    </property>
   </action>
  </widget>

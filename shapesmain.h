@@ -35,6 +35,10 @@ private slots:
 
     void on_secondShapeButton_toggled(bool checked);
 
+    void on_actionDelete_All_triggered();
+
+    void on_actionDelete_Intersecting_triggered();
+
 protected:
     void paintEvent(QPaintEvent *);
     void mousePressEvent(QMouseEvent *e);

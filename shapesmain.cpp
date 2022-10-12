@@ -143,3 +143,33 @@ void ShapesMain::on_secondShapeButton_toggled(bool checked)
     }
 }
 
+
+void ShapesMain::on_actionDelete_All_triggered()
+{
+    for (auto & shape : SceneController::getInstance().shapes) {
+        SceneController::getInstance().shapes.clear();
+    }
+    this->update();
+}
+
+
+void ShapesMain::on_actionDelete_Intersecting_triggered()
+{
+    std::vector<Shape *> shapesToDelete = std::vector<Shape *>();
+
+    for (auto & shape1 : SceneController::getInstance().shapes) {
+        for (auto & shape2 : SceneController::getInstance().shapes) {
+            if (&shape1 != &shape2 && shape1.outline.intersects(shape2.outline)) {
+                shapesToDelete.push_back(&shape1);
+                shapesToDelete.push_back(&shape2);
+            }
+        }
+    }
+
+    for (auto shape : shapesToDelete) {
+        SceneController::getInstance().deleteFigure(shape);
+    }
+
+    this->update();
+}
+
