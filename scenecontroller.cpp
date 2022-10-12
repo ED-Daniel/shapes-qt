@@ -132,3 +132,8 @@ bool SceneController::hasSelectedFigure()
 {
     return selected != nullptr;
 }
+
+Shape *SceneController::getSlectedShape()
+{
+    return selected;
+}

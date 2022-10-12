@@ -39,3 +39,15 @@ double EditShapeDialog::qStringToDouble(const QString &value)
     return ret;
 }
 
+void EditShapeDialog::paintEvent(QPaintEvent *)
+{
+    Shape * selectedShape = SceneController::getInstance().getSlectedShape();
+    ui->heightEdit->setText(QString::number(selectedShape->getHeight()));
+    ui->widthEdit->setText(QString::number(selectedShape->getWidth()));
+    ui->xEdit->setText(QString::number(selectedShape->getX()));
+    ui->yEdit->setText(QString::number(selectedShape->getY()));
+
+    ui->areaOutput->setText(QString::number(selectedShape->getArea()));
+    ui->perimeterOutput->setText(QString::number(selectedShape->getPerimeter()));
+}
+

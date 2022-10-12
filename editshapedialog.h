@@ -24,6 +24,9 @@ private:
     Ui::EditShapeDialog *ui;
 
     double qStringToDouble(const QString & value);
+
+protected:
+    void paintEvent(QPaintEvent *);
 };
 
 #endif // EDITSHAPEDIALOG_H

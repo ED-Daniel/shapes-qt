@@ -6,6 +6,9 @@ Shape::Shape(qreal x, qreal y, qreal width, qreal height)
     this->y = y;
     this->width = width;
     this->height = height;
+
+    area = width * height;
+    perimeter = 2 * width + 2 * height;
 }
 
 void Shape::setStart(qreal startOffset)
@@ -41,6 +44,12 @@ void Shape::addLine(Places place, qreal endOffset)
 
 void Shape::addOuterRound(qreal radius, Places place)
 {
+    perimeter -= 2 * radius;
+    perimeter += M_PI_2 * radius;
+
+    area -= radius * radius;
+    area += M_PI_4 * radius * radius;
+
     switch (place) {
     case Places::upperLeft:
         addLine(Places::downLeft, radius);
@@ -65,6 +74,11 @@ void Shape::addOuterRound(qreal radius, Places place)
 
 void Shape::addInnerRound(qreal radius, Places place)
 {
+    perimeter -= 2 * radius;
+    perimeter += M_PI_2 * radius;
+
+    area -= M_PI_4 * radius * radius;
+
     switch (place) {
     case Places::upperLeft:
         addLine(Places::downLeft, radius);
@@ -89,6 +103,11 @@ void Shape::addInnerRound(qreal radius, Places place)
 
 void Shape::addRoundPit(qreal radius, Places place)
 {
+    perimeter -= 2 * radius;
+    perimeter += M_PI * radius;
+
+    area -= M_PI_2 * radius * radius;
+
     switch (place) {
     case Places::upper:
         addLine(Places::upperLeft, radius);
@@ -105,6 +124,8 @@ void Shape::addRoundPit(qreal radius, Places place)
 
 void Shape::addStair(qreal a, Places place)
 {
+    area -= a * a;
+
     switch (place) {
     case Places::upperLeft:
         addLine(Places::downLeft, a);
@@ -133,6 +154,11 @@ void Shape::addStair(qreal a, Places place)
 
 void Shape::addSlope(qreal a, Places place)
 {
+    perimeter -= a * 2;
+    perimeter += a * M_SQRT2;
+
+    area -= a * a * 0.5;
+
     switch (place) {
     case Places::upperLeft:
         addLine(Places::downLeft, a);
@@ -157,6 +183,10 @@ void Shape::addSlope(qreal a, Places place)
 
 void Shape::addPit(qreal a, Places place)
 {
+    perimeter += 2 * a;
+
+    area -= 2 * a * a;
+
     switch (place) {
     case Places::upper:
         addLine(Places::upperLeft, a);
@@ -199,6 +229,26 @@ qreal Shape::getX()
 qreal Shape::getY()
 {
     return y;
+}
+
+qreal Shape::getHeight()
+{
+    return height;
+}
+
+qreal Shape::getWidth()
+{
+    return width;
+}
+
+qreal Shape::getPerimeter()
+{
+    return perimeter;
+}
+
+qreal Shape::getArea()
+{
+    return area;
 }
 
 

@@ -37,6 +37,12 @@ public:
     qreal getX();
     qreal getY();
 
+    qreal getHeight();
+    qreal getWidth();
+
+    qreal getPerimeter();
+    qreal getArea();
+
 private:
     qreal x;
     qreal y;
@@ -46,6 +52,9 @@ private:
 
     qreal previousX;
     qreal previousY;
+
+    qreal area;
+    qreal perimeter;
 };
 
 #endif // SHAPE_H

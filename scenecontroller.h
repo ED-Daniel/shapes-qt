@@ -54,6 +54,8 @@ public:
     void moveSelectedToCoordinates(qreal x, qreal y, qreal windowWidth, qreal windowHeight);
 
     bool hasSelectedFigure();
+
+    Shape * getSlectedShape();
 };
 
 #endif // SCENECONTROLLER_H
