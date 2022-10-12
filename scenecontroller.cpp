@@ -83,8 +83,14 @@ void SceneController::deleteFigure(Shape *figure)
                 selected = nullptr;
             }
             shapes.erase(shapes.begin() + i);
+            break;
         }
     }
+}
+
+void SceneController::deleteFigure(int index)
+{
+    shapes.erase(shapes.begin() + index);
 }
 
 void SceneController::deleteSelectedFigure()

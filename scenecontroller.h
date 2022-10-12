@@ -45,6 +45,7 @@ public:
     void deselectFigure();
 
     void deleteFigure(Shape * figure);
+    void deleteFigure(int index);
     void deleteSelectedFigure();
 
     void editSelectedFigure();

@@ -5,6 +5,7 @@
 #include <QtGui>
 #include <QtCore>
 #include <stdexcept>
+#include <algorithm>
 
 #include "editshapedialog.h"
 

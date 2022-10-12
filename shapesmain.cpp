@@ -155,20 +155,29 @@ void ShapesMain::on_actionDelete_All_triggered()
 
 void ShapesMain::on_actionDelete_Intersecting_triggered()
 {
-    std::vector<Shape *> shapesToDelete = std::vector<Shape *>();
+    std::vector<int> shapesToDelete = std::vector<int>();
 
-    for (auto & shape1 : SceneController::getInstance().shapes) {
-        for (auto & shape2 : SceneController::getInstance().shapes) {
-            if (&shape1 != &shape2 && shape1.outline.intersects(shape2.outline)) {
-                shapesToDelete.push_back(&shape1);
-                shapesToDelete.push_back(&shape2);
+    for (size_t i = 0; i < SceneController::getInstance().shapes.size(); i++) {
+        for (size_t j = 0; j < SceneController::getInstance().shapes.size(); j++) {
+            if (i != j && SceneController::getInstance().shapes[i].outline.intersects(SceneController::getInstance().shapes[j].outline)) {
+                if (std::find(shapesToDelete.begin(), shapesToDelete.end(), i) == shapesToDelete.end()) {
+                    shapesToDelete.push_back(i);
+                }
+                if (std::find(shapesToDelete.begin(), shapesToDelete.end(), j) == shapesToDelete.end()) {
+                    shapesToDelete.push_back(j);
+                }
             }
         }
     }
 
-    for (auto shape : shapesToDelete) {
-        SceneController::getInstance().deleteFigure(shape);
+    QString output = "OUTPUT: ";
+
+    for (size_t i = 0; i < shapesToDelete.size(); i++) {
+        output += QString::number(shapesToDelete[i]) + "\t";
+        SceneController::getInstance().deleteFigure(shapesToDelete[i] - i);
     }
+
+    ui->statusbar->showMessage(output);
 
     this->update();
 }
