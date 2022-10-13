@@ -48,12 +48,32 @@ void SceneController::rotateFigure(size_t i, qreal angle)
 
     Shape chosenShape = shapes[i];
 
+    if (qAbs(chosenShape.rotationAngle - angle) < 0.01) {
+        return;
+    }
+
     QTransform transform;
     transform.translate(chosenShape.getX() + width / 2, chosenShape.getY() + height / 2);
     transform.rotate(angle);
     transform.translate(-chosenShape.getX() - width / 2, -chosenShape.getY() - height / 2);
 
     shapes[i].outline = transform.map(chosenShape.outline);
+    shapes[i].rotationAngle = angle;
+}
+
+void SceneController::rotateSelected(qreal angle)
+{
+    if (qAbs(selected->rotationAngle - angle) < 0.01) {
+        return;
+    }
+
+    QTransform transform;
+    transform.translate(selected->getX() + width / 2, selected->getY() + height / 2);
+    transform.rotate(angle);
+    transform.translate(-selected->getX() - width / 2, -selected->getY() - height / 2);
+
+    selected->outline = transform.map(selected->outline);
+    selected->rotationAngle = angle;
 }
 
 void SceneController::selectFigure(size_t i)

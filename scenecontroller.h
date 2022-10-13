@@ -37,7 +37,9 @@ public:
     std::vector<Shape> shapes = std::vector<Shape>();
 
     void createFirstShape(qreal x, qreal y, ShapesTypes shapeType);
+
     void rotateFigure(size_t i, qreal angle);
+    void rotateSelected(qreal angle);
 
     void selectFigure(size_t i);
     void selectFigure(Shape * figure);

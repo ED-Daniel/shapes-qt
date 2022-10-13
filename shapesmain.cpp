@@ -48,6 +48,13 @@ void ShapesMain::moveFigure(bool)
     updateFrames = true;
 }
 
+void ShapesMain::rotateFigure(bool)
+{
+    RotateShapeDialog * rotateDialog = new RotateShapeDialog(this);
+    rotateDialog->show();
+    this->update();
+}
+
 void ShapesMain::paintEvent(QPaintEvent *) {
     QPainter painter(this);
     SceneController::getInstance().renderFigures(painter);
@@ -92,14 +99,17 @@ void ShapesMain::mousePressEvent(QMouseEvent *e)
                 QAction * deleteAction = new QAction("Delete", this);
                 QAction * editAction = new QAction("Edit", this);
                 QAction * moveAction = new QAction("Move", this);
+                QAction * rotateAction = new QAction("Rotate", this);
 
                 connect(deleteAction, SIGNAL(triggered(bool)), this, SLOT(deleteFigure(bool)));
                 connect(editAction, SIGNAL(triggered(bool)), this, SLOT(editFigure(bool)));
                 connect(moveAction, SIGNAL(triggered(bool)), this, SLOT(moveFigure(bool)));
+                connect(rotateAction, SIGNAL(triggered(bool)), this, SLOT(rotateFigure(bool)));
 
                 contextMenu->addAction(deleteAction);
                 contextMenu->addAction(editAction);
                 contextMenu->addAction(moveAction);
+                contextMenu->addAction(rotateAction);
 
                 contextMenu->popup(this->mapToGlobal(e->pos()));
             }

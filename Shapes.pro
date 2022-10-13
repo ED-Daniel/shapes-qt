@@ -11,18 +11,21 @@ CONFIG += c++17
 SOURCES += \
     editshapedialog.cpp \
     main.cpp \
+    rotateshapedialog.cpp \
     scenecontroller.cpp \
     shape.cpp \
     shapesmain.cpp
 
 HEADERS += \
     editshapedialog.h \
+    rotateshapedialog.h \
     scenecontroller.h \
     shape.h \
     shapesmain.h
 
 FORMS += \
     editshapedialog.ui \
+    rotateshapedialog.ui \
     shapesmain.ui
 
 # Default rules for deployment.

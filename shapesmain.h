@@ -8,6 +8,7 @@
 #include <algorithm>
 
 #include "editshapedialog.h"
+#include "rotateshapedialog.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class ShapesMain; }
@@ -20,7 +21,6 @@ class ShapesMain : public QMainWindow
 public:
     ShapesMain(QWidget *parent = nullptr);
     ~ShapesMain();
-
 private:
     Ui::ShapesMain *ui;
 
@@ -34,6 +34,7 @@ private slots:
     void deleteFigure(bool);
     void editFigure(bool);
     void moveFigure(bool);
+    void rotateFigure(bool);
 
     void on_deleteSelectedButton_clicked();
 

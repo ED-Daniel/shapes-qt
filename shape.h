@@ -19,6 +19,7 @@ public:
     Shape(qreal x, qreal y, qreal width, qreal height);
 
     QPainterPath outline;
+    qreal rotationAngle = 0;
 
     void setStart(qreal startOffset);
 
