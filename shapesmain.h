@@ -25,10 +25,15 @@ private:
     Ui::ShapesMain *ui;
 
     bool canMoveObjects = true;
+    bool updateFrames = false;
+    int frameCounter = 0;
+
+    void moveFigureToCursor();
 
 private slots:
     void deleteFigure(bool);
     void editFigure(bool);
+    void moveFigure(bool);
 
     void on_deleteSelectedButton_clicked();
 

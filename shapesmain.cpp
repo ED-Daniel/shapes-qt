@@ -15,6 +15,21 @@ ShapesMain::~ShapesMain()
     delete ui;
 }
 
+void ShapesMain::moveFigureToCursor()
+{
+    QPoint cursorPosition = this->mapFromGlobal(QCursor::pos());
+
+    try {
+        SceneController::getInstance().moveSelectedToCoordinates(cursorPosition.x(), cursorPosition.y(), this->size().width(), this->size().height());
+    }
+    catch (std::out_of_range & e) {
+        ui->statusbar->showMessage("Out of bounds");
+        setMouseTracking(false);
+        canMoveObjects = false;
+        updateFrames = false;
+    }
+}
+
 void ShapesMain::deleteFigure(bool)
 {
     SceneController::getInstance().deleteSelectedFigure();
@@ -28,6 +43,11 @@ void ShapesMain::editFigure(bool)
     this->update();
 }
 
+void ShapesMain::moveFigure(bool)
+{
+    updateFrames = true;
+}
+
 void ShapesMain::paintEvent(QPaintEvent *) {
     QPainter painter(this);
     SceneController::getInstance().renderFigures(painter);
@@ -38,6 +58,14 @@ void ShapesMain::paintEvent(QPaintEvent *) {
     else {
         ui->deleteSelectedButton->setEnabled(false);
     }
+
+    ui->statusbar->showMessage("FRAME: " + QString::number(frameCounter));
+
+    if (updateFrames) {
+        frameCounter++;
+        moveFigureToCursor();
+        this->update();
+    }
 }
 
 void ShapesMain::mousePressEvent(QMouseEvent *e)
@@ -46,6 +74,7 @@ void ShapesMain::mousePressEvent(QMouseEvent *e)
     mouseRect.addRect(e->pos().x(), e->pos().y(), 1, 1);
 
     bool found = false;
+    updateFrames = false;
 
     for (auto & shape : SceneController::getInstance().shapes) {
         if (shape.outline.intersects(mouseRect)) {
@@ -62,12 +91,15 @@ void ShapesMain::mousePressEvent(QMouseEvent *e)
                 QMenu * contextMenu = new QMenu();
                 QAction * deleteAction = new QAction("Delete", this);
                 QAction * editAction = new QAction("Edit", this);
+                QAction * moveAction = new QAction("Move", this);
 
                 connect(deleteAction, SIGNAL(triggered(bool)), this, SLOT(deleteFigure(bool)));
                 connect(editAction, SIGNAL(triggered(bool)), this, SLOT(editFigure(bool)));
+                connect(moveAction, SIGNAL(triggered(bool)), this, SLOT(moveFigure(bool)));
 
                 contextMenu->addAction(deleteAction);
                 contextMenu->addAction(editAction);
+                contextMenu->addAction(moveAction);
 
                 contextMenu->popup(this->mapToGlobal(e->pos()));
             }
