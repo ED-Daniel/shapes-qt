@@ -20,6 +20,6 @@ RotateShapeDialog::~RotateShapeDialog()
 
 void RotateShapeDialog::on_horizontalSlider_valueChanged(int value)
 {
-    SceneController::getInstance().rotateSelected(qDegreesToRadians(value));
+    SceneController::getInstance().rotateSelected(qDegreesToRadians((float)value));
 }
 
