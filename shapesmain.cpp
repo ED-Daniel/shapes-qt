@@ -66,7 +66,7 @@ void ShapesMain::paintEvent(QPaintEvent *) {
         ui->deleteSelectedButton->setEnabled(false);
     }
 
-    //ui->statusbar->showMessage("FRAME: " + QString::number(frameCounter));
+    ui->statusbar->showMessage("FRAME: " + QString::number(frameCounter));
 
     if (updateFrames) {
         frameCounter++;
