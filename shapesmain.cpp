@@ -233,6 +233,9 @@ void ShapesMain::on_actionFit_Shapes_triggered()
   qreal x = margin;
   qreal y = margin;
 
+  qreal maxShapeHeight = 0;
+  qreal maxShapeWidth = 0;
+
   bool completed = false;
 
   while (scaleValue > 0.1 && !completed) {
@@ -243,16 +246,26 @@ void ShapesMain::on_actionFit_Shapes_triggered()
       qreal shapeWidth = SceneController::getInstance().shapes[i].getWidth();
       qreal shapeHeight = SceneController::getInstance().shapes[i].getHeight();
 
+      if (shapeWidth > maxShapeWidth) {
+          maxShapeWidth = shapeWidth;
+      }
+      if (shapeHeight > maxShapeHeight) {
+          maxShapeHeight = shapeHeight;
+      }
+
       if (i == SceneController::getInstance().shapes.size() - 1) {
         completed = true;
         break;
       }
 
-      if (x + 2 * shapeWidth + margin < width) {
+      qreal nextShapeWidth = SceneController::getInstance().shapes[i + 1].getWidth();
+      qreal nextShapeHeight = SceneController::getInstance().shapes[i + 1].getHeight();
+
+      if (x + shapeWidth + nextShapeWidth + margin < width) {
         x += shapeWidth + margin;
       } else {
         x = margin;
-        if (y + 2 * shapeHeight + margin < height) {
+        if (y + shapeHeight + nextShapeHeight + margin < height) {
           y += shapeHeight + margin;
         } else {
           break;

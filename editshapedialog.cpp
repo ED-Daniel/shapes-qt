@@ -32,8 +32,10 @@ void EditShapeDialog::on_submitDialogBox_accepted()
     SceneController::getInstance().height = height;
     SceneController::getInstance().width = width;
 
+    ShapesTypes shapeType = SceneController::getInstance().getSlectedShape()->getShapeType();
+
     SceneController::getInstance().deleteSelectedFigure();
-    SceneController::getInstance().createFirstShape(x, y, ShapesTypes::first);
+    SceneController::getInstance().createFirstShape(x, y, shapeType);
     SceneController::getInstance().rotateFigure(SceneController::getInstance().shapes.size() - 1, angle);
 }
 

@@ -17,6 +17,7 @@ SOURCES += \
     shapesmain.cpp
 
 HEADERS += \
+    customtypes.h \
     editshapedialog.h \
     rotateshapedialog.h \
     scenecontroller.h \

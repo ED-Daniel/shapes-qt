@@ -1,6 +1,6 @@
 #include "shape.h"
 
-Shape::Shape(qreal x, qreal y, qreal width, qreal height)
+Shape::Shape(qreal x, qreal y, qreal width, qreal height, ShapesTypes shapeType)
 {
     this->x = x;
     this->y = y;
@@ -9,6 +9,8 @@ Shape::Shape(qreal x, qreal y, qreal width, qreal height)
 
     area = width * height;
     perimeter = 2 * width + 2 * height;
+
+    this->shapeType = shapeType;
 }
 
 void Shape::setStart(qreal startOffset)
@@ -240,6 +242,32 @@ void Shape::scale(qreal value)
     perimeter = outline.length();
 }
 
+void Shape::rotate(qreal angle)
+{
+    if (qAbs(rotationAngle - angle) < 0.01) {
+        return;
+    }
+
+    QTransform transform;
+    transform.translate(getX() + width / 2, getY() + height / 2);
+    transform.rotate(angle);
+    transform.translate(-getX() - width / 2, -getY() - height / 2);
+
+    outline = transform.map(outline);
+    rotationAngle += angle;
+}
+
+void Shape::resetRotation()
+{
+    QTransform transform;
+    transform.translate(x + width / 2, y + height / 2);
+    transform.rotate(-rotationAngle);
+    transform.translate(-x - width / 2, -y - height / 2);
+
+    outline = transform.map(outline);
+    rotationAngle = 0;
+}
+
 qreal Shape::getX()
 {
     return x;
@@ -273,6 +301,11 @@ qreal Shape::getArea()
 qreal Shape::getScaleValue()
 {
     return scaleValue;
+}
+
+ShapesTypes Shape::getShapeType()
+{
+    return shapeType;
 }
 
 

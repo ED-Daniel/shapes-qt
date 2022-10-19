@@ -6,12 +6,6 @@
 #include <stdexcept>
 #include <QtWidgets>
 
-enum ShapesTypes {
-    first,
-    second,
-    nothing
-};
-
 class SceneController
 {
 private:

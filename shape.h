@@ -3,20 +3,12 @@
 
 #include <QtGui>
 #include <QtCore>
-
-enum Places {
-    upperLeft,
-    upper,
-    upperRight,
-    downLeft,
-    down,
-    downRight
-};
+#include "customtypes.h"
 
 class Shape
 {
 public:
-    Shape(qreal x, qreal y, qreal width, qreal height);
+    Shape(qreal x, qreal y, qreal width, qreal height, ShapesTypes shapeType = ShapesTypes::first);
 
     QPainterPath outline;
     qreal rotationAngle = 0;
@@ -36,6 +28,8 @@ public:
     void restorePosition();
 
     void scale(qreal value);
+    void rotate(qreal angle);
+    void resetRotation();
 
     qreal getX();
     qreal getY();
@@ -46,6 +40,8 @@ public:
     qreal getPerimeter();
     qreal getArea();
     qreal getScaleValue();
+
+    ShapesTypes getShapeType();
 
 private:
     qreal x;
@@ -61,6 +57,8 @@ private:
     qreal perimeter;
 
     qreal scaleValue = 1;
+
+    ShapesTypes shapeType;
 };
 
 #endif // SHAPE_H
