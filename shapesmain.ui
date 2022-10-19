@@ -71,7 +71,14 @@
     <addaction name="actionDelete_All"/>
     <addaction name="actionDelete_Intersecting"/>
    </widget>
+   <widget class="QMenu" name="menuFit">
+    <property name="title">
+     <string>Fit</string>
+    </property>
+    <addaction name="actionFit_Shapes"/>
+   </widget>
    <addaction name="menuDelete"/>
+   <addaction name="menuFit"/>
   </widget>
   <action name="actionDraw">
    <property name="text">
@@ -86,6 +93,11 @@
   <action name="actionDelete_Intersecting">
    <property name="text">
     <string>Delete Intersecting</string>
+   </property>
+  </action>
+  <action name="actionFit_Shapes">
+   <property name="text">
+    <string>Fit Shapes</string>
    </property>
   </action>
  </widget>

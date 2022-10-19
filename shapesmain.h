@@ -46,6 +46,8 @@ private slots:
 
     void on_actionDelete_Intersecting_triggered();
 
+    void on_actionFit_Shapes_triggered();
+
 protected:
     void paintEvent(QPaintEvent *);
     void mousePressEvent(QMouseEvent *e);

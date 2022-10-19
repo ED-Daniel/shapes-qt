@@ -66,7 +66,7 @@ void ShapesMain::paintEvent(QPaintEvent *) {
         ui->deleteSelectedButton->setEnabled(false);
     }
 
-    ui->statusbar->showMessage("FRAME: " + QString::number(frameCounter));
+    //ui->statusbar->showMessage("FRAME: " + QString::number(frameCounter));
 
     if (updateFrames) {
         frameCounter++;
@@ -188,9 +188,7 @@ void ShapesMain::on_secondShapeButton_toggled(bool checked)
 
 void ShapesMain::on_actionDelete_All_triggered()
 {
-    for (auto & shape : SceneController::getInstance().shapes) {
-        SceneController::getInstance().shapes.clear();
-    }
+    SceneController::getInstance().shapes.clear();
     this->update();
 }
 
@@ -221,6 +219,15 @@ void ShapesMain::on_actionDelete_Intersecting_triggered()
 
     ui->statusbar->showMessage(output);
 
+    this->update();
+}
+
+
+void ShapesMain::on_actionFit_Shapes_triggered()
+{
+    for (size_t i = 0; i < SceneController::getInstance().shapes.size(); i++) {
+        SceneController::getInstance().set0Rotation(i);
+    }
     this->update();
 }
 

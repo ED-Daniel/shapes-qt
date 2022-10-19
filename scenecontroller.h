@@ -40,6 +40,8 @@ public:
 
     void rotateFigure(size_t i, qreal angle);
     void rotateSelected(qreal angle);
+    void set0Rotation(size_t i);
+    void setSelected0Rotation();
 
     void selectFigure(size_t i);
     void selectFigure(Shape * figure);

@@ -58,7 +58,7 @@ void SceneController::rotateFigure(size_t i, qreal angle)
     transform.translate(-chosenShape.getX() - width / 2, -chosenShape.getY() - height / 2);
 
     shapes[i].outline = transform.map(chosenShape.outline);
-    shapes[i].rotationAngle = angle;
+    shapes[i].rotationAngle += angle;
 }
 
 void SceneController::rotateSelected(qreal angle)
@@ -73,7 +73,39 @@ void SceneController::rotateSelected(qreal angle)
     transform.translate(-selected->getX() - width / 2, -selected->getY() - height / 2);
 
     selected->outline = transform.map(selected->outline);
-    selected->rotationAngle = angle;
+    selected->rotationAngle += angle;
+}
+
+void SceneController::set0Rotation(size_t i)
+{
+    if (i >= shapes.size()) {
+        return;
+    }
+
+    Shape chosenShape = shapes[i];
+
+    qreal angle = -chosenShape.rotationAngle;
+
+    QTransform transform;
+    transform.translate(chosenShape.getX() + width / 2, chosenShape.getY() + height / 2);
+    transform.rotate(angle);
+    transform.translate(-chosenShape.getX() - width / 2, -chosenShape.getY() - height / 2);
+
+    shapes[i].outline = transform.map(chosenShape.outline);
+    shapes[i].rotationAngle = 0;
+}
+
+void SceneController::setSelected0Rotation()
+{
+    qreal angle = -selected->rotationAngle;
+
+    QTransform transform;
+    transform.translate(selected->getX() + width / 2, selected->getY() + height / 2);
+    transform.rotate(angle);
+    transform.translate(-selected->getX() - width / 2, -selected->getY() - height / 2);
+
+    selected->outline = transform.map(selected->outline);
+    selected->rotationAngle = 0;
 }
 
 void SceneController::selectFigure(size_t i)
