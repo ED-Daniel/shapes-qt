@@ -66,7 +66,7 @@ void ShapesMain::paintEvent(QPaintEvent *) {
         ui->deleteSelectedButton->setEnabled(false);
     }
 
-    ui->statusbar->showMessage("FRAME: " + QString::number(frameCounter));
+    //ui->statusbar->showMessage("FRAME: " + QString::number(frameCounter));
 
     if (updateFrames) {
         frameCounter++;
@@ -230,59 +230,69 @@ void ShapesMain::on_actionFit_Shapes_triggered()
   qreal margin = 3;
   qreal scaleValue = 1;
   qreal scaleStep = 0.1;
-  qreal x = margin;
-  qreal y = margin;
 
-  qreal maxShapeHeight = 0;
-  qreal maxShapeWidth = 0;
+  std::sort(SceneController::getInstance().shapes.begin(), SceneController::getInstance().shapes.end(), [](Shape & lhs, Shape & rhs){
+      return lhs.getHeight() >= rhs.getHeight();
+  });
 
-  bool completed = false;
+  while (scaleValue > 0.1) {
+      bool completed = true;
+      std::vector<Level> levels = std::vector<Level>();
 
-  while (scaleValue > 0.1 && !completed) {
-    for (size_t i = 0; i < SceneController::getInstance().shapes.size(); i++) {
-      SceneController::getInstance().set0Rotation(i);
-      SceneController::getInstance().moveToCoordinates(i, x, y);
+      for (size_t i = 0; i < SceneController::getInstance().shapes.size(); i++) {
+        SceneController::getInstance().set0Rotation(i);
+        qreal shapeHeight = SceneController::getInstance().shapes[i].getHeight();
+        qreal shapeWidth = SceneController::getInstance().shapes[i].getWidth();
 
-      qreal shapeWidth = SceneController::getInstance().shapes[i].getWidth();
-      qreal shapeHeight = SceneController::getInstance().shapes[i].getHeight();
+        if (levels.empty()) {
+            levels.push_back(Level(margin, shapeHeight + margin, width - 2 * margin));
+        }
 
-      if (shapeWidth > maxShapeWidth) {
-          maxShapeWidth = shapeWidth;
-      }
-      if (shapeHeight > maxShapeHeight) {
-          maxShapeHeight = shapeHeight;
-      }
+        double minFreeSpace = width + 10;
+        size_t minSpaceIdx = 0;
+        bool foundFit = false;
 
-      if (i == SceneController::getInstance().shapes.size() - 1) {
-        completed = true;
-        break;
-      }
+        for (size_t i = 0; i < levels.size(); i++) {
+            if (levels[i].fits(shapeHeight, shapeWidth + 2 * margin)) {
+                double freeSpace = levels[i].checkFreeSpace(shapeWidth + 2 * margin);
+                if (freeSpace < minFreeSpace) {
+                    minFreeSpace = freeSpace;
+                    minSpaceIdx = i;
+                }
+                foundFit = true;
+            }
+        }
+        if (foundFit) {
+            SceneController::getInstance().moveToCoordinates(i, levels[minSpaceIdx].getUsedSpace() + margin, levels[minSpaceIdx].getStart());
+            levels[minSpaceIdx].add(shapeWidth + 2 * margin);
+        }
+        else {
+            double previousEnd = levels[levels.size() - 1].getEnd();
+            levels.push_back(Level(previousEnd + margin, previousEnd + shapeHeight + margin, width - 2 * margin));
+            SceneController::getInstance().moveToCoordinates(i, levels[levels.size() - 1].getUsedSpace() + margin, levels[levels.size() - 1].getStart());
+            levels[levels.size() - 1].add(shapeWidth);
 
-      qreal nextShapeWidth = SceneController::getInstance().shapes[i + 1].getWidth();
-      qreal nextShapeHeight = SceneController::getInstance().shapes[i + 1].getHeight();
-
-      if (x + shapeWidth + nextShapeWidth + margin < width) {
-        x += shapeWidth + margin;
-      } else {
-        x = margin;
-        if (y + shapeHeight + nextShapeHeight + margin < height) {
-          y += shapeHeight + margin;
-        } else {
-          break;
+            if (margin + levels[levels.size() - 1].getEnd() >= height) {
+                completed = false;
+                break;
+            }
         }
       }
-    }
     if (completed) {
-      break;
+        break;
     }
+
     scaleValue -= scaleStep;
     for (size_t i = 0; i < SceneController::getInstance().shapes.size(); i++) {
       SceneController::getInstance().scaleShape(i, 1 / SceneController::getInstance().shapes[i].getScaleValue());
       SceneController::getInstance().scaleShape(i, scaleValue);
     }
-    x = margin;
-    y = margin;
   }
   this->update();
+}
+
+void ShapesMain::on_actionTurn_On_Off_toggled(bool arg1)
+{
+    SceneController::getInstance().useRandom = arg1;
 }
 

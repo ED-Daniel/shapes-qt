@@ -7,6 +7,10 @@ SceneController::SceneController()
 
 void SceneController::createFirstShape(qreal x, qreal y, ShapesTypes shapeType)
 {
+    if (useRandom) {
+        height = generateRandomRange(150, 400);
+        width = generateRandomRange(150, 400);
+    }
 
     Shape shape = Shape(x, y, width, height, shapeType);
 
@@ -38,6 +42,10 @@ void SceneController::createFirstShape(qreal x, qreal y, ShapesTypes shapeType)
     }
 
     shapes.push_back(shape);
+
+    if (useRandom) {
+        rotateFigure(shapes.size() - 1, generateRandomRange(-180, 180));
+    }
 }
 
 void SceneController::rotateFigure(size_t i, qreal angle)
@@ -170,4 +178,13 @@ bool SceneController::hasSelectedFigure()
 Shape *SceneController::getSlectedShape()
 {
     return selected;
+}
+
+qreal SceneController::generateRandomRange(qreal min, qreal max)
+{
+    std::random_device rd;
+    std::mt19937 gen(rd());
+    std::uniform_int_distribution<> distr(min, max);
+
+    return distr(gen);
 }

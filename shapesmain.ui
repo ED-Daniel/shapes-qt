@@ -77,8 +77,15 @@
     </property>
     <addaction name="actionFit_Shapes"/>
    </widget>
+   <widget class="QMenu" name="menuRandom">
+    <property name="title">
+     <string>Random</string>
+    </property>
+    <addaction name="actionTurn_On_Off"/>
+   </widget>
    <addaction name="menuDelete"/>
    <addaction name="menuFit"/>
+   <addaction name="menuRandom"/>
   </widget>
   <action name="actionDraw">
    <property name="text">
@@ -98,6 +105,17 @@
   <action name="actionFit_Shapes">
    <property name="text">
     <string>Fit Shapes</string>
+   </property>
+  </action>
+  <action name="actionTurn_On_Off">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="checked">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Turn On/Off</string>
    </property>
   </action>
  </widget>

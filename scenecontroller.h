@@ -5,6 +5,7 @@
 #include <iostream>
 #include <stdexcept>
 #include <QtWidgets>
+#include <random>
 
 class SceneController
 {
@@ -27,6 +28,8 @@ public:
     qreal verticesExcavations = 20;
     qreal pitDeepth = 20;
     qreal pitRadius = 20;
+
+    bool useRandom = true;
 
     std::vector<Shape> shapes = std::vector<Shape>();
 
@@ -58,6 +61,8 @@ public:
     bool hasSelectedFigure();
 
     Shape * getSlectedShape();
+
+    qreal generateRandomRange(qreal min, qreal max);
 };
 
 #endif // SCENECONTROLLER_H

@@ -9,6 +9,7 @@
 
 #include "editshapedialog.h"
 #include "rotateshapedialog.h"
+#include "level.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class ShapesMain; }
@@ -47,6 +48,8 @@ private slots:
     void on_actionDelete_Intersecting_triggered();
 
     void on_actionFit_Shapes_triggered();
+
+    void on_actionTurn_On_Off_toggled(bool arg1);
 
 protected:
     void paintEvent(QPaintEvent *);

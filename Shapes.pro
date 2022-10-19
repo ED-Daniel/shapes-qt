@@ -10,6 +10,7 @@ CONFIG += c++17
 
 SOURCES += \
     editshapedialog.cpp \
+    level.cpp \
     main.cpp \
     rotateshapedialog.cpp \
     scenecontroller.cpp \
@@ -19,6 +20,7 @@ SOURCES += \
 HEADERS += \
     customtypes.h \
     editshapedialog.h \
+    level.h \
     rotateshapedialog.h \
     scenecontroller.h \
     shape.h \
