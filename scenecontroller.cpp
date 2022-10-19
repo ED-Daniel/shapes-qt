@@ -108,6 +108,15 @@ void SceneController::setSelected0Rotation()
     selected->rotationAngle = 0;
 }
 
+void SceneController::scaleShape(size_t i, qreal value)
+{
+    if (i >= shapes.size()) {
+        return;
+    }
+
+    shapes[i].scale(value);
+}
+
 void SceneController::selectFigure(size_t i)
 {
     if (i >= shapes.size()) {
@@ -177,13 +186,20 @@ void SceneController::moveSelectedToCoordinates(qreal x, qreal y, qreal windowWi
     window.addRect(0, 0, windowWidth, windowHeight);
 
     if (window.contains(selected->outline)) {
-        selected->outline.translate(x - selected->getX(), y - selected->getY());
         selected->setPosition(x, y);
     }
     else {
         selected->restorePosition();
         throw std::out_of_range("FIGURE WAS OUT OF RANGE");
     }
+}
+
+void SceneController::moveToCoordinates(size_t i, qreal x, qreal y)
+{
+    if (i >= shapes.size()) {
+        return;
+    }
+    shapes[i].setPosition(x, y);
 }
 
 bool SceneController::hasSelectedFigure()

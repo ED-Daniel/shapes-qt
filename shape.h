@@ -35,6 +35,8 @@ public:
     void setPosition(qreal x, qreal y);
     void restorePosition();
 
+    void scale(qreal value);
+
     qreal getX();
     qreal getY();
 
@@ -43,6 +45,7 @@ public:
 
     qreal getPerimeter();
     qreal getArea();
+    qreal getScaleValue();
 
 private:
     qreal x;
@@ -56,6 +59,8 @@ private:
 
     qreal area;
     qreal perimeter;
+
+    qreal scaleValue = 1;
 };
 
 #endif // SHAPE_H

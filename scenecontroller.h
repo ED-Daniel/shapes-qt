@@ -43,6 +43,8 @@ public:
     void set0Rotation(size_t i);
     void setSelected0Rotation();
 
+    void scaleShape(size_t i, qreal value);
+
     void selectFigure(size_t i);
     void selectFigure(Shape * figure);
 
@@ -57,6 +59,7 @@ public:
     void renderFigures(QPainter & painter);
 
     void moveSelectedToCoordinates(qreal x, qreal y, qreal windowWidth, qreal windowHeight);
+    void moveToCoordinates(size_t i, qreal x, qreal y);
 
     bool hasSelectedFigure();
 

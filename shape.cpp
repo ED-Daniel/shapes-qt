@@ -210,6 +210,8 @@ void Shape::setPosition(qreal x, qreal y)
     previousX = this->x;
     previousY = this->y;
 
+    outline.translate(x - this->x, y - this->y);
+
     this->x = x;
     this->y = y;
 }
@@ -219,6 +221,23 @@ void Shape::restorePosition()
     outline.translate(previousX - this->x, previousY - this->y);
     this->x = previousX;
     this->y = previousY;
+}
+
+void Shape::scale(qreal value)
+{
+    QTransform transform;
+    transform.translate(x, y);
+    transform.scale(value, value);
+    transform.translate(-x, -y);
+
+    outline = transform.map(outline);
+    scaleValue *= value;
+
+    width *= value;
+    height *= value;
+
+    area *= value * value;
+    perimeter = outline.length();
 }
 
 qreal Shape::getX()
@@ -249,6 +268,11 @@ qreal Shape::getPerimeter()
 qreal Shape::getArea()
 {
     return area;
+}
+
+qreal Shape::getScaleValue()
+{
+    return scaleValue;
 }
 
 

@@ -66,7 +66,7 @@ void ShapesMain::paintEvent(QPaintEvent *) {
         ui->deleteSelectedButton->setEnabled(false);
     }
 
-    //ui->statusbar->showMessage("FRAME: " + QString::number(frameCounter));
+    ui->statusbar->showMessage("FRAME: " + QString::number(frameCounter));
 
     if (updateFrames) {
         frameCounter++;
@@ -225,9 +225,51 @@ void ShapesMain::on_actionDelete_Intersecting_triggered()
 
 void ShapesMain::on_actionFit_Shapes_triggered()
 {
+  qreal width = this->size().width();
+  qreal height = this->size().height();
+  qreal margin = 3;
+  qreal scaleValue = 1;
+  qreal scaleStep = 0.1;
+  qreal x = margin;
+  qreal y = margin;
+
+  bool completed = false;
+
+  while (scaleValue > 0.1 && !completed) {
     for (size_t i = 0; i < SceneController::getInstance().shapes.size(); i++) {
-        SceneController::getInstance().set0Rotation(i);
+      SceneController::getInstance().set0Rotation(i);
+      SceneController::getInstance().moveToCoordinates(i, x, y);
+
+      qreal shapeWidth = SceneController::getInstance().shapes[i].getWidth();
+      qreal shapeHeight = SceneController::getInstance().shapes[i].getHeight();
+
+      if (i == SceneController::getInstance().shapes.size() - 1) {
+        completed = true;
+        break;
+      }
+
+      if (x + 2 * shapeWidth + margin < width) {
+        x += shapeWidth + margin;
+      } else {
+        x = margin;
+        if (y + 2 * shapeHeight + margin < height) {
+          y += shapeHeight + margin;
+        } else {
+          break;
+        }
+      }
     }
-    this->update();
+    if (completed) {
+      break;
+    }
+    scaleValue -= scaleStep;
+    for (size_t i = 0; i < SceneController::getInstance().shapes.size(); i++) {
+      SceneController::getInstance().scaleShape(i, 1 / SceneController::getInstance().shapes[i].getScaleValue());
+      SceneController::getInstance().scaleShape(i, scaleValue);
+    }
+    x = margin;
+    y = margin;
+  }
+  this->update();
 }
 
